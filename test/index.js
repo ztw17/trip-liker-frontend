@@ -48,9 +48,9 @@ function renderPostsData(post) {
       let postData =  `<div id="card" class="col-md-8">
       <img src=${post.image} class="img-fluid" id="post-avatar" />
       <h2>${post.location}</h2>
-      <p>${post.description}</p>
-      <p>${post.tips}</p>
-      <p>${post.date}</p>
+      <p>Description: ${post.description}</p>
+      <p>Tips: ${post.tips}</p>
+      <p>Photo Date: ${post.date}</p>
       <p>${post.likes} Likes </p>
       <button id=${post.id} data-likes=${post.likes} type="button" class="btn btn-outline-danger btn-sm">Like</button>
     </div>`
@@ -62,8 +62,9 @@ const createNewPost = () => {
   const image = newPostForm.image.value;
   const location = newPostForm.location.value
   const description = newPostForm.description.value
+  const tips = newPostForm.tips.value
   const date = newPostForm.date.value
-  fetch(POSTS_URL, createPostObj(image, location, description, date, user) )
+  fetch(POSTS_URL, createPostObj(image, location, description, tips, date, user) )
     .then( resp => resp.json() )
     .then( newPostData => renderPostsData(newPostData) )
     .catch( err => console.log(err) )
@@ -106,28 +107,27 @@ const setUser = (userData) => {
   
 }
 
-
 const userLogin = (e) => {
     e.preventDefault()
     username = loginForm.username.value
     fetch(USERS_URL, createUserObj(username))
-    .then(resp => resp.json())
-    .then(userData => setUser(userData))
-    loginDiv.style.display = "none"
-    postsDiv.style.display = "block"
-    fetchPosts()
+        .then(resp => resp.json())
+        .then(userData => setUser(userData))
+        loginDiv.style.display = "none"
+        postsDiv.style.display = "block"
+        fetchPosts()
 }
 
 function renderNewPost(newPostData) {
-  let postData =  `<div id="card" class="col-md-8">
-    <img src=${newPostData.image} class="img-fluid" id="post-avatar"/>
-    <h2>${newPostData.location}</h2>
-    <p>${newPostData.description}</p>
-    <p>Tips: ${newPostData.tips}</p>
-    <p>${newPostData.date}</p>
-    <p>${newPostData.likes} Likes </p>
-    <button id=${newPostData.id} data-likes=${newPostData.likes} type="button" class="btn btn-outline-danger btn-sm">Like</button>
-  </div>`
+  let postData = `<div id="card" class="col-md-8">
+        <img src=${newPostData.image} class="img-fluid" id="post-avatar"/>
+        <h2>Location: ${newPostData.location}</h2>
+        <p>Description:${newPostData.description}</p>
+        <p>Tips: ${newPostData.tips}</p>
+        <p>Photo Date: ${newPostData.date}</p>
+        <p>${newPostData.likes} Likes </p>
+        <button id=${newPostData.id} data-likes=${newPostData.likes} type="button" class="btn btn-outline-danger btn-sm">Like</button>
+    </div>`
     postsDiv.innerHTML += postData 
 }
 
@@ -155,13 +155,7 @@ const navBarClickHandler = () => {
 
 // event listeners
  
-
 // invoked variables
 
-
-
-
-
-
-//Event Listener
+// Event Listener
 navBar.addEventListener("click", navBarClickHandler)
