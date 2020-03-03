@@ -1,24 +1,45 @@
-.login-div {
-    background: linear-gradient(271deg, #72b3a2, #83a7c2, #8d8fc7);
-    background-size: 100% 100%;
+.h-100 {
+    background: linear-gradient(200deg, rgb(153, 0, 255), #4e76ac, rgb(97, 201, 178));
+    background-size: 600% 600%;
+    background-attachment: fixed;
+    height: 100%;
+    min-height: 100%;
+    animation: TackyGradient 12s ease infinite;
+  }
+  html * {
+     font-family: sans-serif !important;
+  }
+  @keyframes TackyGradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
 
-    -webkit-animation: AnimationName 2s ease infinite;
-    -moz-animation: AnimationName 2s ease infinite;
-    animation: AnimationName 2s ease infinite;
+.card {
+    text-align: left;
+    border: grey solid 1px;
+    padding: 1rem;
+    width: 40rem;
+    height: 50rem;
+    display: inline-grid;
+    margin: 1rem 2rem;
+    align-self: center;
+    /* box-shadow: 3px 4px #4682B4 */
+}
 
-    @-webkit-keyframes AnimationName {
-        0%{background-position:0% 51%}
-        50%{background-position:100% 50%}
-        100%{background-position:0% 51%}
-    }
-    @-moz-keyframes AnimationName {
-        0%{background-position:0% 51%}
-        50%{background-position:100% 50%}
-        100%{background-position:0% 51%}
-    }
-    @keyframes AnimationName {
-        0%{background-position:0% 51%}
-        50%{background-position:100% 50%}
-        100%{background-position:0% 51%}
-    }
+.post-avatar {
+    justify-self: center;
+    height: 25rem;
+    width: auto;
+}
+
+#post-container {
+    display: flex;
+    align-items: center;
 }
