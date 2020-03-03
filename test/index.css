@@ -19,27 +19,21 @@
     100% {
       background-position: 0% 50%;
     }
-  }
-
-.card {
+}
+#card {
     text-align: left;
+    background-color: white;
     border: grey solid 1px;
     padding: 1rem;
     width: 40rem;
     height: 50rem;
     display: inline-grid;
     margin: 1rem 2rem;
-    align-self: center;
+   
     /* box-shadow: 3px 4px #4682B4 */
 }
-
-.post-avatar {
+#post-avatar {
     justify-self: center;
     height: 25rem;
     width: auto;
-}
-
-#post-container {
-    display: flex;
-    align-items: center;
 }
