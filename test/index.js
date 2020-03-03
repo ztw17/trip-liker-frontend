@@ -6,7 +6,7 @@ const POSTS_URL = "http://localhost:3000/posts"
 const USERS_URL = "http://localhost:3000/users"
 const postsDiv = document.getElementById("post-container")
 const addBtn = document.querySelector("#new-post-btn");
-const formContainer = document.querySelector(".container");
+const formContainer = document.getElementById("new-post-form");
 const newPostForm = document.getElementsByClassName("add-post-form")[0];
 const loginForm = document.getElementsByClassName("login-form")[0]
 const loginDiv = document.getElementsByClassName("login-div")[0]
@@ -29,8 +29,10 @@ const showCreatePostForm = () => {
     addPost = !addPost;
     if (addPost) {
       formContainer.style.display = "block";
+
     } else {
       formContainer.style.display = "none";
+      loginDiv.style.display = "none";
     }
 }
   
@@ -95,7 +97,7 @@ const createUserObj = (user) => {
           "Accept": "application/json"
       },
       body: JSON.stringify({
-          username: username
+          username: user.id
       })
   }
 }
@@ -151,7 +153,9 @@ const navBarClickHandler = () => {
         homePage.style.display = "none"
         profPage.style.display = "block"
     }
-    if (event.target.innerText === "New Post") {
+    if (event.target.innerText === "New Post") {  
+      
+     showCreatePostForm()
 
     }
 }
