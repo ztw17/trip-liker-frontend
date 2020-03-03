@@ -1,8 +1,7 @@
 // variables
 const homePage = document.getElementById("home")
 const profPage = document.getElementById("profile")
-const navBar = document.querySelector(".navbar")
-// VARIABLES 
+const navBar = document.getElementById("nav")
 const POSTS_URL = "http://localhost:3000/posts"
 const USERS_URL = "http://localhost:3000/users"
 const postsDiv = document.getElementById("post-container")
@@ -26,14 +25,14 @@ let addPost = false;
 //   })
 // }
 
-// const showCreatePostForm = () => {
-//     addPost = !addPost;
-//     if (addPost) {
-//       formContainer.style.display = "block";
-//     } else {
-//       formContainer.style.display = "none";
-//     }
-// }
+const showCreatePostForm = () => {
+    addPost = !addPost;
+    if (addPost) {
+      formContainer.style.display = "block";
+    } else {
+      formContainer.style.display = "none";
+    }
+}
   
 function fetchPosts() {
     fetch(POSTS_URL)
@@ -115,6 +114,7 @@ const userLogin = (e) => {
     .then(userData => setUser(userData))
     loginDiv.style.display = "none"
     postsDiv.style.display = "block"
+    navBar.style.display = "block"
     fetchPosts()
 }
 
@@ -150,6 +150,9 @@ const navBarClickHandler = () => {
     if (event.target.innerText === "Profile"){
         homePage.style.display = "none"
         profPage.style.display = "block"
+    }
+    if (event.target.innerText === "New Post") {
+
     }
 }
 
