@@ -1,11 +1,9 @@
 .login-div {
     background: linear-gradient(271deg, #72b3a2, #83a7c2, #8d8fc7);
     background-size: 100% 100%;
-
     -webkit-animation: AnimationName 2s ease infinite;
     -moz-animation: AnimationName 2s ease infinite;
     animation: AnimationName 2s ease infinite;
-
     @-webkit-keyframes AnimationName {
         0%{background-position:0% 51%}
         50%{background-position:100% 50%}
@@ -21,4 +19,20 @@
         50%{background-position:100% 50%}
         100%{background-position:0% 51%}
     }
+}
+#card {
+    text-align: left;
+    border: grey solid 1px;
+    padding: 1rem;
+    width: 40rem;
+    height: 50rem;
+    display: inline-grid;
+    margin: 1rem 2rem;
+   
+    /* box-shadow: 3px 4px #4682B4 */
+}
+#post-avatar {
+    justify-self: center;
+    height: 25rem;
+    width: auto;
 }

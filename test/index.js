@@ -45,13 +45,14 @@ function fetchPosts() {
 // .then(toys => toys.forEach(toy => renderToyInfo(toy)))
 
 function renderPostsData(post) {
-      let postData =  `<div class="card">
-      <img src=${post.image} class="post-avatar" />
+      let postData =  `<div id="card" class="col-md-8">
+      <img src=${post.image} class="img-fluid" id="post-avatar" />
       <h2>${post.location}</h2>
       <p>${post.description}</p>
+      <p>${post.tips}</p>
       <p>${post.date}</p>
       <p>${post.likes} Likes </p>
-      <button id=${post.id} data-likes=${post.likes} class="like-btn">Like</button>
+      <button id=${post.id} data-likes=${post.likes} type="button" class="btn btn-outline-danger btn-sm">Like</button>
     </div>`
       postsDiv.innerHTML += postData 
 }
@@ -118,13 +119,14 @@ const userLogin = (e) => {
 }
 
 function renderNewPost(newPostData) {
-  let postData =  `<div class="card">
-    <img src=${newPostData.image} class="post-avatar" />
+  let postData =  `<div id="card" class="col-md-8">
+    <img src=${newPostData.image} class="img-fluid" id="post-avatar"/>
     <h2>${newPostData.location}</h2>
     <p>${newPostData.description}</p>
+    <p>${newPostData.tips}</p>
     <p>${newPostData.date}</p>
     <p>${newPostData.likes} Likes </p>
-    <button id=${newPostData.id} data-likes=${newPostData.likes} class="like-btn">Like</button>
+    <button id=${newPostData.id} data-likes=${newPostData.likes} type="button" class="btn btn-outline-danger btn-sm">Like</button>
   </div>`
     postsDiv.innerHTML += postData 
 }
