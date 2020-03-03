@@ -1,15 +1,9 @@
+// variables
 const homePage = document.getElementById("home")
 const profPage = document.getElementById("profile")
 const navBar = document.querySelector(".navbar")
 
-
-
-
-
-
-
-
-//Functions
+// functions
 const navBarClickHandler = () => {
     
     if (event.target.innerText === "Home"){
@@ -22,6 +16,10 @@ const navBarClickHandler = () => {
     }
 }
 
+// event listeners
+ 
+
+// invoked variables
 
 
 
