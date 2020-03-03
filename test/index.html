@@ -35,9 +35,6 @@
               <a class="nav-link" href="#">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link">Add A Post</a>
-            </li>
-            <li class="nav-item">
               <a class="nav-link">Profile</a>
             </li>
             <!-- <li class="nav-item dropdown">
@@ -54,13 +51,60 @@
             <!-- <li class="nav-item">
               <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
             </li> -->
+            <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
           </ul>
-          <!-- <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form> -->
+          <!-- <form class="form-inline my-2 my-lg-0"> -->
+            <button id="expand-new-post-form" class="btn btn-outline-success my-2 my-sm-0">Add New Post</button>
+          <!-- </form> -->
         </div>
       </nav>
+
+      
+
+      <div class="container" id="new-post-form" style="display: none" >
+        <form class="add-post-form" d>
+          <h3>Create a Post!</h3>
+  
+          <br />
+          <input
+            type="text"
+            name="image"
+            value=""
+            placeholder="Enter an image link..."
+            class="input-text"
+          />
+          <input
+            type="text"
+            name="location"
+            value=""
+            placeholder="Where was this photo taken?..."
+            class="input-text"
+          />
+          <br />
+          <input
+            type="text"
+            name="description"
+            value=""
+            placeholder="Give a description of the location of this image..."
+            class="input-text"
+          />
+          <br />
+          <input
+            type="text"
+            name="date"
+            value=""
+            placeholder="When was this image taken?..."
+            class="input-text"
+          />
+          <br />
+          <input
+            type="submit"
+            name="submit"
+            value="Create Post"
+            class="submit"
+          />
+        </form>
+      </div>
     <div class = "container">
       <div style="display: none" id="post-container" class="row d-flex justify-content-center">
         

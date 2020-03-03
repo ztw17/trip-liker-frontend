@@ -1,13 +1,12 @@
 // variables
 const homePage = document.getElementById("home")
 const profPage = document.getElementById("profile")
-const navBar = document.querySelector(".navbar")
-// VARIABLES 
+const navBar = document.getElementById("nav")
 const POSTS_URL = "http://localhost:3000/posts"
 const USERS_URL = "http://localhost:3000/users"
 const postsDiv = document.getElementById("post-container")
 const addBtn = document.querySelector("#new-post-btn");
-const formContainer = document.querySelector(".container");
+const formContainer = document.getElementById("new-post-form");
 const newPostForm = document.getElementsByClassName("add-post-form")[0];
 const loginForm = document.getElementsByClassName("login-form")[0]
 const loginDiv = document.getElementsByClassName("login-div")[0]
@@ -26,14 +25,16 @@ let addPost = false;
 //   })
 // }
 
-// const showCreatePostForm = () => {
-//     addPost = !addPost;
-//     if (addPost) {
-//       formContainer.style.display = "block";
-//     } else {
-//       formContainer.style.display = "none";
-//     }
-// }
+const showCreatePostForm = () => {
+    addPost = !addPost;
+    if (addPost) {
+      formContainer.style.display = "block";
+
+    } else {
+      formContainer.style.display = "none";
+      loginDiv.style.display = "none";
+    }
+}
   
 function fetchPosts() {
     fetch(POSTS_URL)
@@ -97,7 +98,7 @@ const createUserObj = (user) => {
           "Accept": "application/json"
       },
       body: JSON.stringify({
-          username: username
+          username: user.id
       })
   }
 }
@@ -111,11 +112,12 @@ const userLogin = (e) => {
     e.preventDefault()
     username = loginForm.username.value
     fetch(USERS_URL, createUserObj(username))
-        .then(resp => resp.json())
-        .then(userData => setUser(userData))
-        loginDiv.style.display = "none"
-        postsDiv.style.display = "block"
-        fetchPosts()
+    .then(resp => resp.json())
+    .then(userData => setUser(userData))
+    loginDiv.style.display = "none"
+    postsDiv.style.display = "block"
+    navBar.style.display = "block"
+    fetchPosts()
 }
 
 function renderNewPost(newPostData) {
@@ -151,11 +153,17 @@ const navBarClickHandler = () => {
         homePage.style.display = "none"
         profPage.style.display = "block"
     }
+    if (event.target.innerText === "New Post") {  
+      
+     showCreatePostForm()
+
+    }
 }
 
 // event listeners
  
 // invoked variables
 
-// Event Listener
+
+//Event Listener
 navBar.addEventListener("click", navBarClickHandler)
