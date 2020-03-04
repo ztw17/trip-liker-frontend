@@ -1,14 +1,15 @@
 // variables
+const POSTS_URL = "http://localhost:3000/posts";
+const USERS_URL = "http://localhost:3000/users";
 const homePage = document.getElementById("home");
 const profPage = document.getElementById("profile");
 const navBar = document.getElementById("nav");
-const POSTS_URL = "http://localhost:3000/posts";
-const USERS_URL = "http://localhost:3000/users";
 const postsDiv = document.getElementById("post-container");
-const addBtn = document.querySelector("#new-post-btn");
+// const addBtn = document.querySelector("#new-post-btn");
 const formContainer = document.getElementById("new-post-form");
-const newPostForm = document.getElementsByClassName("add-post-form")[0]
+const newPostForm = document.getElementsByClassName("add-post-form")[0];
 const formSubmitButton = document.getElementsByClassName("modal-footer")[0];
+
 const loginForm = document.getElementsByClassName("login-form")[0]
 const loginDiv = document.getElementsByClassName("login-div")[0]
 const modalDiv = document.getElementsByClassName("modal-content")[0]
@@ -64,15 +65,12 @@ const createNewPost = () => {
     const tips = newPostForm.tips.value
     const date = newPostForm.date.value
     const reqObj = createPostObj(image, location, description, tips, date, user)
-  //   console.log(reqObj)
-    fetch(POSTS_URL, reqObj )
+    fetch(POSTS_URL, reqObj)
       .then( resp => resp.json() )
       .then( newPostData => renderPostsData(newPostData) )
 }
 
-console.log(user)
 const createPostObj = (image, location, description, tips, date, user) => {
-// console.log(foo)
   return {
     method: "POST",
     headers: {
@@ -106,16 +104,14 @@ const createUserObj = (username) => {
 
 const setUser = (userData) => {
     user = userData
-    // console.log('f', user)
-  
 }
 
 const userLogin = (e) => {
     e.preventDefault()
     username = loginForm.username.value
     fetch(USERS_URL, createUserObj(username))
-    .then(resp => resp.json())
-    .then(userData => setUser(userData))
+      .then(resp => resp.json())
+      .then(userData => setUser(userData))
     loginDiv.style.display = "none"
     postsDiv.style.display = "block"
     navBar.style.display = "block"
@@ -132,8 +128,7 @@ const fetchUserPosts = () => {
     .then(allPosts => renderUserPosts(allPosts))
 }
 
-const navBarClickHandler = () => {
-    
+const navBarClickHandler = () => {  
     if (event.target.innerText === "Home"){
         homePage.style.display = "block"
         profPage.parentElement.style.display = "none"
@@ -158,7 +153,7 @@ const likePost = (event) => {
     const clicked = event.target
     fetch(`http://localhost:3000/posts/${event.target.dataset.id}`, updatedLikeObj(likes) )
       .then( resp => resp.json() )
-      .then( updatedPost => renderUpdatedPost(clicked, updatedPost))
+      .then( updatedPost => renderPostLike(clicked, updatedPost))
       .catch( err => console.log(err) )
   }
 }
@@ -209,7 +204,7 @@ const editExistingPost = () => {
     
 }
 
-const renderUpdatedPost = (clicked, updatedPost) => {
+const renderPostLike = (clicked, updatedPost) => {
   const likesElement = clicked.previousElementSibling
   const likesPluralize = updatedPost.likes === 1 ? "Like" : "Likes"
   clicked.dataset.likes = updatedPost.likes
@@ -223,19 +218,33 @@ const renderUserPosts = (allPosts) => {
         if (user.id === post.user.id) {
         let userPostData =  `<div id="card" data-user=${post.user.id} class="col-md-8">
         <div id="header">
-        <h4 class='header-title'>📍 ${post.location}</h4>
+          <h4 class='header-title'>📍 ${post.location}</h4>
         </div>
         <img src=${post.image} class="img-fluid" id="post-avatar" />
-        <p>Description: ${post.description}</p>
-        <p>Tips: ${post.tips}</p>
-        <p>Photo Date: ${post.date}</p>
-        <p>${post.likes} Likes </p>
+        <p>Description: <b>${post.description}</b></p>
+        <p>Tips: <b>${post.tips}</b></p>
+        <p>Photo Date: <b>${post.date}</b></p>
+        <p>${post.likes} ${post.likes === 1 ? "Like" : "Likes"}</p>
         <button data-toggle="modal" data-target="#editModal" id="expand-edit-post-form" data-id=${post.id} type="button" class="btn btn-outline-success btn-sm">Edit Post</button>
-        <button data-id=${post.id} data-likes=${post.likes} type="button" class="btn btn-outline-danger btn-sm">Delete Post</button>
+        <button id="delete-btn" data-id=${post.id} data-likes=${post.likes} type="button" class="btn btn-outline-danger btn-sm">Delete Post</button>
       </div>`
       profPage.innerHTML += userPostData 
-      }
-    })
+    }
+  })
+}
+
+const deletePost = (event) => {
+  const postId = event.target.dataset.id
+  const reqObj = {
+    method: "DELETE"
+  }
+  fetch(`http://localhost:3000/posts/${postId}`, reqObj)
+    .then( resp => resp.json() )
+    .then( post => {event.target.parentNode.remove() 
+      postsDiv.innerHTML = ""
+      fetchPosts() 
+  })
+  alert("Your post is about to be deleted")
 }
 
 // Event Listeners
@@ -250,6 +259,8 @@ profPage.addEventListener("click", (e) => {
     }
 })
 editFormSubmitButton.addEventListener("click", editExistingPost)
+profPage.addEventListener("click", deletePost)
+
 
 // Extra
 
