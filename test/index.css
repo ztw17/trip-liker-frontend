@@ -26,7 +26,7 @@
     border: rgb(78, 78, 78) solid 4px;
     padding: 1rem;
     width: 40rem;
-    height: 50rem;
+    height: 51rem;
     display: inline-grid;
     margin: 1rem 2rem;
    
@@ -38,3 +38,8 @@
     height: 30rem;
     width: auto;
 }
+
+.header-title{
+    width: 500px;
+}
+
