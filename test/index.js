@@ -7,10 +7,10 @@ const USERS_URL = "http://localhost:3000/users"
 const postsDiv = document.getElementById("post-container")
 const addBtn = document.querySelector("#new-post-btn");
 const formContainer = document.getElementById("new-post-form");
-const newPostForm = document.getElementsByClassName("add-post-form")[0];
-const formSubmitButton = document.getElementById("modal-form");
-const loginForm = document.getElementsByClassName("login-form")[0];
-const loginDiv = document.getElementsByClassName("login-div")[0];
+const newPostForm = document.getElementsByClassName("add-post-form")[0]
+const formSubmitButton = document.getElementsByClassName("modal-footer")[0];
+const loginForm = document.getElementsByClassName("login-form")[0]
+const loginDiv = document.getElementsByClassName("login-div")[0]
 let user = null;
 let addPost = false;
 
@@ -60,19 +60,26 @@ function renderPostsData(post) {
 }
 
 const createNewPost = () => {
+    console.log(user)
+    const foo = user
+
   event.preventDefault();
   const image = newPostForm.image.value;
   const location = newPostForm.location.value
   const description = newPostForm.description.value
   const tips = newPostForm.tips.value
   const date = newPostForm.date.value
-  fetch(POSTS_URL, createPostObj(image, location, description, tips, date, user) )
+  const reqObj = createPostObj(image, location, description, tips, date, user)
+//   console.log(reqObj)
+  fetch(POSTS_URL, reqObj )
     .then( resp => resp.json() )
     .then( newPostData => renderPostsData(newPostData) )
 
 }
 
-const createPostObj = (image, location, description, date, user) => {
+console.log(user)
+const createPostObj = (image, location, description, tips, date, user) => {
+// console.log(foo)
   return {
     method: "POST",
     headers: {
@@ -83,6 +90,7 @@ const createPostObj = (image, location, description, date, user) => {
       image: image,
       location: location,
       description: description,
+      tips: tips,
       date: date,
       likes: 0,
       user_id: user.id
@@ -90,7 +98,7 @@ const createPostObj = (image, location, description, date, user) => {
   }
 }
 
-const createUserObj = (user) => {
+const createUserObj = (username) => {
   return {
       method: "POST",
       headers: {
@@ -98,17 +106,19 @@ const createUserObj = (user) => {
           "Accept": "application/json"
       },
       body: JSON.stringify({
-          username: user.id
+          username: username
       })
   }
 }
 
 const setUser = (userData) => {
     user = userData
+    // console.log('f', user)
   
 }
 
 const userLogin = (e) => {
+    console.log('here')
     e.preventDefault()
     username = loginForm.username.value
     fetch(USERS_URL, createUserObj(username))
@@ -197,14 +207,9 @@ const renderUpdatedPost = (clicked, updatedPost) => {
 
 
 //Event Listener
-formSubmitButton.addEventListener("submit", console.log("it's been clicked"))
+formSubmitButton.addEventListener("click", createNewPost)
 loginForm.addEventListener("submit", userLogin)
 navBar.addEventListener("click", navBarClickHandler)
 postsDiv.addEventListener("click", likePost)
 
 // createNewPost
-
-// navBarClickHandler)
-// postsDiv.addEventListener("click", (event) => {
-//   console.log(event.target)
-// })
