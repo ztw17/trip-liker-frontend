@@ -48,8 +48,8 @@ function fetchPosts() {
 
 function renderPostsData(post) {
       let postData =  `<div id="card" class="col-md-8">
+        <h4>📍 ${post.location}</h4>
         <img src=${post.image} class="img-fluid" id="post-avatar" />
-        <h2>${post.location}</h2>
         <p>Description: ${post.description}</p>
         <p>Tips: ${post.tips}</p>
         <p>Photo Date: ${post.date}</p>
@@ -123,13 +123,13 @@ const userLogin = (e) => {
 
 function renderNewPost(newPostData) {
   let postData = `<div id="card" class="col-md-8">
+        <h4>📍 ${newPostData.location}</h4>
         <img src=${newPostData.image} class="img-fluid" id="post-avatar"/>
-        <h2>Location: ${newPostData.location}</h2>
         <p>Description:${newPostData.description}</p>
         <p>Tips: ${newPostData.tips}</p>
         <p>Photo Date: ${newPostData.date}</p>
         <p>${newPostData.likes} Likes </p>
-        <button data-id=${newPostData.id} data-likes=${newPostData.likes} type="button" class="btn btn-outline-danger btn-sm">Like</button>
+        <button data-id=${post.id} data-likes=${post.likes} type="button" class="btn btn-outline-danger btn-sm">Like</button>
         <button disabled style="display: none" type="button" class="btn btn-secondary btn-sm">Liked ❤️</button>
     </div>`
     postsDiv.innerHTML += postData 
