@@ -26,7 +26,7 @@
     border: rgb(78, 78, 78) solid 2px;
     padding: 1rem;
     width: 40rem;
-    height: 50rem;
+    height: 51rem;
     display: inline-grid;
     margin: 1rem 2rem;
    
@@ -47,3 +47,4 @@
 img {
   border-radius: 8px;
 }
+
