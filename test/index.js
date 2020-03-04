@@ -200,12 +200,14 @@ const createEditObj = (editDescription, editTips, editLocation) => {
 }
 
 const editExistingPost = () => {
+    event.preventDefault()
     const editDescription = editPostForm.description.value
     const editTips = editPostForm.tips.value
     const editLocation = editPostForm.location.value
     const editObj = createEditObj(editDescription, editTips, editLocation)
-    fetch(POSTS_URL/`${editFormSubmitButton.children[0].dataset.id}`, editObj)
-    
+    fetch(`http://localhost:3000/posts/${editFormSubmitButton.children[0].dataset.id}`, editObj)
+    .then(resp => resp.json())
+    .then(updatedObj => console.log(updatedObj))
     
 }
 
