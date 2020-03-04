@@ -8,6 +8,7 @@ const postsDiv = document.getElementById("post-container")
 const addBtn = document.querySelector("#new-post-btn");
 const formContainer = document.getElementById("new-post-form");
 const newPostForm = document.getElementsByClassName("add-post-form")[0];
+const formSubmitButton = document.getElementById("modal-form");
 const loginForm = document.getElementsByClassName("login-form")[0]
 const loginDiv = document.getElementsByClassName("login-div")[0]
 let user = null;
@@ -40,7 +41,6 @@ function fetchPosts() {
     fetch(POSTS_URL)
       .then( resp => resp.json() )
       .then( postsData => postsData.forEach(post => renderPostsData(post) )
-      .catch( err => console.log(err) )
 )}
 
 // .then(toys => toys.forEach(toy => renderToyInfo(toy)))
@@ -137,7 +137,6 @@ function renderNewPost(newPostData) {
 
 // addBtn.addEventListener("click", showCreatePostForm);
 // formContainer.addEventListener("submit", createNewPost)
-loginForm.addEventListener("submit", userLogin)
 
 // INVOKED VARIABLES
 // fetchPosts()
@@ -154,16 +153,20 @@ const navBarClickHandler = () => {
         profPage.style.display = "block"
     }
     if (event.target.innerText === "New Post") {  
-      
+        
      showCreatePostForm()
-
+     
     }
 }
 
 // event listeners
- 
+
 // invoked variables
 
 
 //Event Listener
+formSubmitButton.addEventListener("submit", console.log("it's been clicked"))
+loginForm.addEventListener("submit", userLogin)
 navBar.addEventListener("click", navBarClickHandler)
+
+// createNewPost

@@ -54,57 +54,75 @@
             <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
           </ul>
           <!-- <form class="form-inline my-2 my-lg-0"> -->
-            <button id="expand-new-post-form" class="btn btn-outline-success my-2 my-sm-0">Add New Post</button>
+            <button data-toggle="modal" data-target="#exampleModal" id="expand-new-post-form" class="btn btn-outline-success my-2 my-sm-0">New Post</button>
           <!-- </form> -->
         </div>
       </nav>
 
-      
-
-      <div class="container" id="new-post-form" style="display: none" >
-        <form class="add-post-form" d>
-          <h3>Create a Post!</h3>
-  
-          <br />
-          <input
-            type="text"
-            name="image"
-            value=""
-            placeholder="Enter an image link..."
-            class="input-text"
-          />
-          <input
-            type="text"
-            name="location"
-            value=""
-            placeholder="Where was this photo taken?..."
-            class="input-text"
-          />
-          <br />
-          <input
-            type="text"
-            name="description"
-            value=""
-            placeholder="Give a description of the location of this image..."
-            class="input-text"
-          />
-          <br />
-          <input
-            type="text"
-            name="date"
-            value=""
-            placeholder="When was this image taken?..."
-            class="input-text"
-          />
-          <br />
-          <input
-            type="submit"
-            name="submit"
-            value="Create Post"
-            class="submit"
-          />
-        </form>
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div id="modal-form" class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="container" id="new-post-form" style="display: none" >
+                <form class="add-post-form" d>
+                  <h3>Create a Post!</h3>
+          
+                  <br />
+                  <input
+                    type="text"
+                    name="image"
+                    value=""
+                    placeholder="Enter an image link..."
+                    class="input-text"
+                  />
+                  <input
+                    type="text"
+                    name="location"
+                    value=""
+                    placeholder="Where was this photo taken?..."
+                    class="input-text"
+                  />
+                  <br />
+                  <input
+                    type="text"
+                    name="description"
+                    value=""
+                    placeholder="Give a description of the location of this image..."
+                    class="input-text"
+                  />
+                  <br />
+                  <input
+                  type="text"
+                  name="tips"
+                  value=""
+                  placeholder="Give your top tips from this trip..."
+                  class="input-text"
+                />
+                <br />
+                  <input
+                    type="text"
+                    name="date"
+                    value=""
+                    placeholder="When was this image taken?..."
+                    class="input-text"
+                  />
+                </form>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+              <button id="form-submit" type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
       </div>
+
     <div class = "container">
       <div style="display: none" id="post-container" class="row d-flex justify-content-center">
         
