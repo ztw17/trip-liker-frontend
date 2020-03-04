@@ -4,10 +4,10 @@
     background-attachment: fixed;
     height: 100%;
     min-height: 100%;
-    animation: TackyGradient 12s ease infinite;
+    animation: TackyGradient 4s ease infinite;
   }
   html * {
-     font-family: sans-serif !important;
+     font-family: Calibri !important;
   }
   @keyframes TackyGradient {
     0% {
@@ -42,4 +42,8 @@
 .modal-dialog {
   width: 600px !important;
   height: 600px !important;
+}
+
+img {
+  border-radius: 8px;
 }
