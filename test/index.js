@@ -7,10 +7,13 @@ const USERS_URL = "http://localhost:3000/users";
 const postsDiv = document.getElementById("post-container");
 const addBtn = document.querySelector("#new-post-btn");
 const formContainer = document.getElementById("new-post-form");
-const newPostForm = document.getElementsByClassName("add-post-form")[0]
+const newPostForm = document.getElementsByClassName("add-post-form")[0];
 const formSubmitButton = document.getElementsByClassName("modal-footer")[0];
 const loginForm = document.getElementsByClassName("login-form")[0];
 const loginDiv = document.getElementsByClassName("login-div")[0];
+const modalDiv = document.getElementsByClassName("modal-content")[0];
+const editButton = document.getElementById("edit-post");
+let deleteButton = null;
 let user = null;
 let addPost = false;
 
@@ -50,6 +53,7 @@ function renderPostsData(post) {
 const createNewPost = () => {
     console.log(user)
     const foo = user
+
 
     event.preventDefault();
     const image = newPostForm.image.value;
@@ -105,7 +109,6 @@ const setUser = (userData) => {
 }
 
 const userLogin = (e) => {
-    console.log('here')
     e.preventDefault()
     username = loginForm.username.value
     fetch(USERS_URL, createUserObj(username))
@@ -117,21 +120,32 @@ const userLogin = (e) => {
     fetchPosts()
 }
 
+// const editPost = () => {
+//     e.preventDefault()
+// }
+
+const fetchUserPosts = () => {
+    fetch(POSTS_URL)
+    .then(resp => resp.json())
+    .then(allPosts => renderUserPosts(allPosts))
+}
+
 const navBarClickHandler = () => {
-    
-    if (event.target.innerText === "Home"){
-        homePage.style.display = "block"
-        profPage.style.display = "none"
-    }
-    if (event.target.innerText === "Profile"){
-        homePage.style.display = "none"
-        profPage.style.display = "block"
-    }
-    if (event.target.innerText === "New Post") {  
-        
-     showCreatePostForm()
-     
-    }
+  if (event.target.innerText === "Home"){
+      homePage.style.display = "block"
+      profPage.parentElement.style.display = "none"
+      postsDiv.parentElement.style.display = "block"
+  }
+  if (event.target.innerText === "Profile"){
+      homePage.style.display = "none"
+      postsDiv.parentElement.style.display = "none"
+      loginDiv.style.display = "none"
+      profPage.parentElement.style.display = "block"
+      fetchUserPosts()
+  }
+  if (event.target.innerText === "New Post") {  
+      showCreatePostForm()
+  }
 }
 
 const likePost = (event) => {
@@ -140,7 +154,7 @@ const likePost = (event) => {
     const clicked = event.target
     fetch(`http://localhost:3000/posts/${event.target.dataset.id}`, updatedLikeObj(likes) )
       .then( resp => resp.json() )
-      .then( updatedPost => renderUpdatedPost(clicked, updatedPost))
+      .then( updatedPost => renderPostLike(clicked, updatedPost))
       .catch( err => console.log(err) )
   }
 }
@@ -156,8 +170,7 @@ const updatedLikeObj = (likes) => {
   }
 }
 
-const renderUpdatedPost = (clicked, updatedPost) => {
-  debugger
+const renderPostLike = (clicked, updatedPost) => {
   const likesElement = clicked.previousElementSibling
   const likesPluralize = updatedPost.likes === 1 ? "Like" : "Likes"
   clicked.dataset.likes = updatedPost.likes
@@ -166,11 +179,47 @@ const renderUpdatedPost = (clicked, updatedPost) => {
   likesElement.innerText = `${updatedPost.likes} ${likesPluralize}`
 }
 
+const renderUserPosts = (allPosts) => {
+    allPosts.forEach(post => { 
+        if (user.id === post.user.id) {
+        let userPostData =  `<div id="card" data-user=${post.user.id} class="col-md-8">
+        <div id="header">
+        <h4 class='header-title'>📍 ${post.location}</h4>
+        </div>
+        <img src=${post.image} class="img-fluid" id="post-avatar" />
+        <p>Description: <b>${post.description}</b></p>
+        <p>Tips: <b>${post.tips}</b></p>
+        <p>Photo Date: <b>${post.date}</b></p>
+        <p>${post.likes} ${post.likes === 1 ? "Like" : "Likes"}</p>
+        <button type="button" id="edit-post" class="btn btn-outline-success btn-sm">Edit Post</button>
+        <button id="delete-btn" data-id=${post.id} data-likes=${post.likes} type="button" class="btn btn-outline-danger btn-sm">Delete Post</button>
+      </div>`
+      profPage.innerHTML += userPostData 
+    }
+  })
+}
+
+const deletePost = (event) => {
+  const postId = event.target.dataset.id
+  const reqObj = {
+    method: "DELETE"
+  }
+  fetch(`http://localhost:3000/posts/${postId}`, reqObj)
+    .then( resp => resp.json() )
+    .then( post => {event.target.parentNode.remove() 
+      postsDiv.innerHTML = ""
+      fetchPosts() 
+  })
+  alert("Your post is about to be deleted")
+}
+
 // Event Listeners
 formSubmitButton.addEventListener("click", createNewPost)
 loginForm.addEventListener("submit", userLogin)
 navBar.addEventListener("click", navBarClickHandler)
 postsDiv.addEventListener("click", likePost)
+// editButton.addEventListener("click")
+profPage.addEventListener("click", deletePost)
 
 // Extra
 
