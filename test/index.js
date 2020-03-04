@@ -166,7 +166,6 @@ const renderUpdatedPost = (clicked, updatedPost) => {
   likesElement.innerText = `${updatedPost.likes} ${likesPluralize}`
 }
 
-
 // Event Listeners
 formSubmitButton.addEventListener("click", createNewPost)
 loginForm.addEventListener("submit", userLogin)
