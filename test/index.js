@@ -9,7 +9,6 @@ const postsDiv = document.getElementById("post-container");
 const formContainer = document.getElementById("new-post-form");
 const newPostForm = document.getElementsByClassName("add-post-form")[0];
 const formSubmitButton = document.getElementsByClassName("modal-footer")[0];
-
 const loginForm = document.getElementsByClassName("login-form")[0]
 const loginDiv = document.getElementsByClassName("login-div")[0]
 const modalDiv = document.getElementsByClassName("modal-content")[0]
@@ -56,8 +55,6 @@ function renderPostsData(post) {
 }
 
 const createNewPost = () => {
-    console.log(user)
-    const foo = user
     event.preventDefault();
     const image = newPostForm.image.value;
     const location = newPostForm.location.value
@@ -200,8 +197,7 @@ const editExistingPost = () => {
     const editLocation = editPostForm.location.value
     const editObj = createEditObj(editDescription, editTips, editLocation)
     fetch(POSTS_URL/`${editFormSubmitButton.children[0].dataset.id}`, editObj)
-    
-    
+
 }
 
 const renderPostLike = (clicked, updatedPost) => {
@@ -234,6 +230,7 @@ const renderUserPosts = (allPosts) => {
 }
 
 const deletePost = (event) => {
+  if (event.target.innerText === "Delete Post"){
   const postId = event.target.dataset.id
   const reqObj = {
     method: "DELETE"
@@ -245,6 +242,7 @@ const deletePost = (event) => {
       fetchPosts() 
   })
   alert("Your post is about to be deleted")
+  }
 }
 
 // Event Listeners
