@@ -125,7 +125,7 @@
               </div>
               <div class="modal-footer">
                 <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-                <button data-dismiss="modal" id="form-submit" type="submit" class="btn btn-primary">Save changes</button>
+                <button data-dismiss="modal" id="form-submit" type="submit" class="btn btn-primary">Submit Post</button>
               </div>
             </form>
           </div>
@@ -148,7 +148,7 @@
       <div class="modal-dialog" role="document">
         <div id="modal-form" class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Edit Post</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -156,7 +156,6 @@
           <div class="modal-body">
             <div class="container" id="edit-post-form" style="display: none" >
               <form class="edit-post-form" d>
-                <h3>Edit Post</h3>
         
                 <br />
                 <input
@@ -165,6 +164,7 @@
                   value=""
                   placeholder="Where was this photo taken?..."
                   class="input-text"
+                  size="50"
                 />
                 <br />
                 <input
@@ -173,6 +173,7 @@
                   value=""
                   placeholder="Give a description of the location of this image..."
                   class="input-text"
+                  size="50"
                 />
                 <br />
                 <input
@@ -181,12 +182,13 @@
                 value=""
                 placeholder="Give your top tips from this trip..."
                 class="input-text"
+                size="50"
               />
               </div>
             </div>
             <div class="modal-footer">
               <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
-              <button id="form-submit" data-dismiss="modal" name="sub" data-id="null" type="submit" class="btn btn-primary">Save changes</button>
+              <button data-dismiss="modal" id="form-submit" name="sub" data-id="null" type="submit" class="btn btn-primary">Submit changes</button>
             </div>
           </form>
         </div>

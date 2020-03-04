@@ -27,10 +27,9 @@
     border: rgb(78, 78, 78) solid 2px;
     padding: 1rem;
     width: 40rem;
-    height: 51rem;
+    height: 52rem;
     display: inline-grid;
     margin: 1rem 2rem;
-   
     /* box-shadow: 3px 4px #4682B4 */
 }
 
@@ -47,14 +46,6 @@
 
 img {
   border-radius: 8px;
-}
-
-.verticalhorizontal {
-  display: table-cell;
-  height: 300px;
-  text-align: center;
-  width: 300px;
-  vertical-align: middle;
 }
 
 .login-div {
