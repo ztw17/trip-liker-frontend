@@ -4,10 +4,10 @@
     background-attachment: fixed;
     height: 100%;
     min-height: 100%;
-    animation: TackyGradient 12s ease infinite;
+    animation: TackyGradient 4s ease infinite;
   }
   html * {
-     font-family: sans-serif !important;
+     font-family: Calibri !important;
   }
   @keyframes TackyGradient {
     0% {
@@ -23,7 +23,7 @@
 #card {
     text-align: left;
     background-color: white;
-    border: rgb(78, 78, 78) solid 4px;
+    border: rgb(78, 78, 78) solid 2px;
     padding: 1rem;
     width: 40rem;
     height: 51rem;
@@ -39,7 +39,12 @@
     width: auto;
 }
 
-.header-title{
-    width: 500px;
+.modal-dialog {
+  width: 600px !important;
+  height: 600px !important;
+}
+
+img {
+  border-radius: 8px;
 }
 
