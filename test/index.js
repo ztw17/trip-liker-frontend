@@ -11,7 +11,6 @@ const newPostForm = document.getElementsByClassName("add-post-form")[0];
 const formSubmitButton = document.getElementById("modal-form");
 const loginForm = document.getElementsByClassName("login-form")[0];
 const loginDiv = document.getElementsByClassName("login-div")[0];
-const card = document.querySelectorAll("#card");
 let user = null;
 let addPost = false;
 
