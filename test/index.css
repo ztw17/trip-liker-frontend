@@ -20,6 +20,7 @@
       background-position: 0% 50%;
     }
 }
+
 #card {
     text-align: left;
     background-color: white;
@@ -46,5 +47,17 @@
 
 img {
   border-radius: 8px;
+}
+
+.verticalhorizontal {
+  display: table-cell;
+  height: 300px;
+  text-align: center;
+  width: 300px;
+  vertical-align: middle;
+}
+
+.login-div {
+  padding-top: 15%
 }
 
