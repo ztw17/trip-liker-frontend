@@ -201,10 +201,3 @@ formSubmitButton.addEventListener("submit", console.log("it's been clicked"))
 loginForm.addEventListener("submit", userLogin)
 navBar.addEventListener("click", navBarClickHandler)
 postsDiv.addEventListener("click", likePost)
-
-// createNewPost
-
-// navBarClickHandler)
-// postsDiv.addEventListener("click", (event) => {
-//   console.log(event.target)
-// })
