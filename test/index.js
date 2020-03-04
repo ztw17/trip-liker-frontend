@@ -9,8 +9,9 @@ const addBtn = document.querySelector("#new-post-btn");
 const formContainer = document.getElementById("new-post-form");
 const newPostForm = document.getElementsByClassName("add-post-form")[0];
 const formSubmitButton = document.getElementById("modal-form");
-const loginForm = document.getElementsByClassName("login-form")[0]
-const loginDiv = document.getElementsByClassName("login-div")[0]
+const loginForm = document.getElementsByClassName("login-form")[0];
+const loginDiv = document.getElementsByClassName("login-div")[0];
+const card = document.querySelectorAll("#card");
 let user = null;
 let addPost = false;
 
@@ -47,14 +48,15 @@ function fetchPosts() {
 
 function renderPostsData(post) {
       let postData =  `<div id="card" class="col-md-8">
-      <img src=${post.image} class="img-fluid" id="post-avatar" />
-      <h2>${post.location}</h2>
-      <p>Description: ${post.description}</p>
-      <p>Tips: ${post.tips}</p>
-      <p>Photo Date: ${post.date}</p>
-      <p>${post.likes} Likes </p>
-      <button id=${post.id} data-likes=${post.likes} type="button" class="btn btn-outline-danger btn-sm">Like</button>
-    </div>`
+        <img src=${post.image} class="img-fluid" id="post-avatar" />
+        <h2>${post.location}</h2>
+        <p>Description: ${post.description}</p>
+        <p>Tips: ${post.tips}</p>
+        <p>Photo Date: ${post.date}</p>
+        <p>${post.likes} Likes </p>
+        <button data-id=${post.id} data-likes=${post.likes} type="button" class="btn btn-outline-danger btn-sm">Like</button>
+        <button disabled style="display: none" type="button" class="btn btn-secondary btn-sm">Liked ❤️</button>
+      </div>`
       postsDiv.innerHTML += postData 
 }
 
@@ -68,7 +70,6 @@ const createNewPost = () => {
   fetch(POSTS_URL, createPostObj(image, location, description, tips, date, user) )
     .then( resp => resp.json() )
     .then( newPostData => renderPostsData(newPostData) )
-    .catch( err => console.log(err) )
 
 }
 
@@ -128,7 +129,8 @@ function renderNewPost(newPostData) {
         <p>Tips: ${newPostData.tips}</p>
         <p>Photo Date: ${newPostData.date}</p>
         <p>${newPostData.likes} Likes </p>
-        <button id=${newPostData.id} data-likes=${newPostData.likes} type="button" class="btn btn-outline-danger btn-sm">Like</button>
+        <button data-id=${newPostData.id} data-likes=${newPostData.likes} type="button" class="btn btn-outline-danger btn-sm">Like</button>
+        <button disabled style="display: none" type="button" class="btn btn-secondary btn-sm">Liked ❤️</button>
     </div>`
     postsDiv.innerHTML += postData 
 }
@@ -159,6 +161,37 @@ const navBarClickHandler = () => {
     }
 }
 
+const likePost = (event) => {
+  if (event.target.className === "btn btn-outline-danger btn-sm") {
+    const likes = parseInt(event.target.dataset.likes)
+    const clicked = event.target
+    fetch(`http://localhost:3000/posts/${event.target.dataset.id}`, updatedLikeObj(likes) )
+      .then( resp => resp.json() )
+      .then( updatedPost => renderUpdatedPost(clicked, updatedPost))
+      .catch( err => console.log(err) )
+  }
+}
+
+const updatedLikeObj = (likes) => {
+  return {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify({likes: likes + 1})
+  }
+}
+
+const renderUpdatedPost = (clicked, updatedPost) => {
+  const likesElement = clicked.previousElementSibling
+  const likesPluralize = updatedPost.likes === 1 ? "Like" : "Likes"
+  clicked.dataset.likes = updatedPost.likes
+  clicked.style.display = "none"
+  clicked.nextElementSibling.style.display ="block"
+  likesElement.innerText = `${updatedPost.likes} ${likesPluralize}`
+}
+
 // event listeners
 
 // invoked variables
@@ -168,5 +201,11 @@ const navBarClickHandler = () => {
 formSubmitButton.addEventListener("submit", console.log("it's been clicked"))
 loginForm.addEventListener("submit", userLogin)
 navBar.addEventListener("click", navBarClickHandler)
+postsDiv.addEventListener("click", likePost)
 
 // createNewPost
+
+// navBarClickHandler)
+// postsDiv.addEventListener("click", (event) => {
+//   console.log(event.target)
+// })
