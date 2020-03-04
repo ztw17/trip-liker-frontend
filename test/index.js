@@ -1,19 +1,18 @@
 // variables
+const POSTS_URL = "http://localhost:3000/posts";
+const USERS_URL = "http://localhost:3000/users";
 const homePage = document.getElementById("home");
 const profPage = document.getElementById("profile");
 const navBar = document.getElementById("nav");
-const POSTS_URL = "http://localhost:3000/posts";
-const USERS_URL = "http://localhost:3000/users";
 const postsDiv = document.getElementById("post-container");
-const addBtn = document.querySelector("#new-post-btn");
+// const addBtn = document.querySelector("#new-post-btn");
 const formContainer = document.getElementById("new-post-form");
 const newPostForm = document.getElementsByClassName("add-post-form")[0];
 const formSubmitButton = document.getElementsByClassName("modal-footer")[0];
 const loginForm = document.getElementsByClassName("login-form")[0];
 const loginDiv = document.getElementsByClassName("login-div")[0];
-const modalDiv = document.getElementsByClassName("modal-content")[0];
+// const modalDiv = document.getElementsByClassName("modal-content")[0];
 const editButton = document.getElementById("edit-post");
-let deleteButton = null;
 let user = null;
 let addPost = false;
 
@@ -54,7 +53,6 @@ const createNewPost = () => {
     console.log(user)
     const foo = user
 
-
     event.preventDefault();
     const image = newPostForm.image.value;
     const location = newPostForm.location.value
@@ -62,15 +60,12 @@ const createNewPost = () => {
     const tips = newPostForm.tips.value
     const date = newPostForm.date.value
     const reqObj = createPostObj(image, location, description, tips, date, user)
-  //   console.log(reqObj)
-    fetch(POSTS_URL, reqObj )
+    fetch(POSTS_URL, reqObj)
       .then( resp => resp.json() )
       .then( newPostData => renderPostsData(newPostData) )
 }
 
-console.log(user)
 const createPostObj = (image, location, description, tips, date, user) => {
-// console.log(foo)
   return {
     method: "POST",
     headers: {
@@ -104,16 +99,14 @@ const createUserObj = (username) => {
 
 const setUser = (userData) => {
     user = userData
-    // console.log('f', user)
-  
 }
 
 const userLogin = (e) => {
     e.preventDefault()
     username = loginForm.username.value
     fetch(USERS_URL, createUserObj(username))
-    .then(resp => resp.json())
-    .then(userData => setUser(userData))
+      .then(resp => resp.json())
+      .then(userData => setUser(userData))
     loginDiv.style.display = "none"
     postsDiv.style.display = "block"
     navBar.style.display = "block"
@@ -184,7 +177,7 @@ const renderUserPosts = (allPosts) => {
         if (user.id === post.user.id) {
         let userPostData =  `<div id="card" data-user=${post.user.id} class="col-md-8">
         <div id="header">
-        <h4 class='header-title'>📍 ${post.location}</h4>
+          <h4 class='header-title'>📍 ${post.location}</h4>
         </div>
         <img src=${post.image} class="img-fluid" id="post-avatar" />
         <p>Description: <b>${post.description}</b></p>
