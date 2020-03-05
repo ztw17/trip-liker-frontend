@@ -25,7 +25,6 @@ let allPosts = [];
 
 // functions
 const showCreatePostForm = () => {
-  console.log(addPost)
     addPost = !addPost;
     if (addPost) {
       formContainer.style.display = "block";
@@ -42,7 +41,6 @@ function fetchPosts() {
       .then( postsData => {
         allPosts = postsData
         postsData.forEach(post => renderPostsData(post))
-
       }
 )}
 
@@ -55,8 +53,8 @@ function renderPostsData(post) {
         <p>Tops Tips: <b>${post.tips}</b></p>
         <p>Photo Date: <b>${post.date}</b></p>
         <p><b>${post.likes} ${post.likes === 1 ? "Like" : "Likes"}</b></p>
-        <button data-id=${post.id} data-likes=${post.likes} data-user_id=${post.user.id} type="button" class="btn btn-outline-danger btn-sm">Like ❤️</button>
-        <button disabled style="display: none" type="button" class="btn btn-secondary btn-sm">Liked ❤️</button>
+        <button data-id=${post.id} data-likes=${post.likes} data-user_id=${post.user.id} type="button" class="btn btn-outline-danger btn-md custom">Like ❤️</button>
+        <button disabled style="display: none" type="button" class="btn btn-secondary btn-sm custom">Liked ❤️</button>
       </div>`
       postsDiv.innerHTML += postData 
 }
@@ -126,7 +124,7 @@ const fetchUserPosts = () => {
     fetch(POSTS_URL)
     .then(resp => resp.json())
     .then(allPosts => {
-        return renderUserPosts(allPosts)})
+      return renderUserPosts(allPosts)})
 }
 
 const navBarClickHandler = () => {  
@@ -153,7 +151,7 @@ const navBarClickHandler = () => {
 }
 
 const likePost = (event) => {
-  if (event.target.className === "btn btn-outline-danger btn-sm") {
+  if (event.target.className === "btn btn-outline-danger btn-md custom") {
     const likes = parseInt(event.target.dataset.likes)
     const clicked = event.target
     fetch(`http://localhost:3000/posts/${event.target.dataset.id}`, updatedLikeObj(likes) )
@@ -190,7 +188,6 @@ const showEditForm = () => {
     loginDiv.style.display = "none";
   }
 }
-
 const createEditObj = (editDescription, editTips, editLocation) => {
     return {
         method: "PATCH",
@@ -205,7 +202,6 @@ const createEditObj = (editDescription, editTips, editLocation) => {
         })
     }
 }
-
 const editExistingPost = () => {
     event.preventDefault()
     const editDescription = editPostForm.description.value
@@ -220,7 +216,6 @@ const editExistingPost = () => {
     })
   }
 
-
 const renderPostLike = (clicked, updatedPost) => {
   const likesElement = clicked.previousElementSibling
   const likesPluralize = updatedPost.likes === 1 ? "Like" : "Likes"
@@ -229,7 +224,6 @@ const renderPostLike = (clicked, updatedPost) => {
   clicked.nextElementSibling.style.display ="block"
   likesElement.innerText = `${updatedPost.likes} ${likesPluralize}`
 }
-
 const renderUserPosts = (allPosts) => {
     allPosts.filter(post => { 
         if (user.id === post.user.id) {
@@ -268,10 +262,7 @@ const deletePost = (event) => {
 
 const handleSearch = () => {
   const searchTerm = event.target.value.toLowerCase();
-  const filteredSearch = allPosts.filter(postObject => 
-    postObject.location.toLowerCase().includes(searchTerm)
-   || postObject.description.toLowerCase().includes(searchTerm)
-   || postObject.tips.toLowerCase().includes(searchTerm))
+  const filteredSearch = allPosts.filter(postObject => postObject.location.toLowerCase().includes(searchTerm) || postObject.description.toLowerCase().includes(searchTerm) || postObject.tips.toLowerCase().includes(searchTerm))
   postsDiv.innerHTML = ""
   filteredSearch.forEach(post => renderPostsData(post))
 }
@@ -290,3 +281,4 @@ profPage.addEventListener("click", (e) => {
 editFormSubmitButton.addEventListener("click", editExistingPost)
 profPage.addEventListener("click", deletePost)
 searchBar.addEventListener("input", handleSearch)
+
