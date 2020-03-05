@@ -41,7 +41,6 @@ function fetchPosts() {
       .then( resp => resp.json() )
       .then( postsData => {
         allPosts = postsData
-
         postsData.forEach(post => renderPostsData(post))
 
       }
@@ -135,6 +134,7 @@ const navBarClickHandler = () => {
         homePage.style.display = "block"
         profPage.parentElement.style.display = "none"
         postsDiv.parentElement.style.display = "block"
+        postsDiv.innerHTML = ""
         fetchPosts()
     }
     if (event.target.innerText === "Profile"){
@@ -142,6 +142,7 @@ const navBarClickHandler = () => {
         postsDiv.parentElement.style.display = "none"
         loginDiv.style.display = "none"
         profPage.parentElement.style.display = "block"
+        profPage.innerHTML = ""
         fetchUserPosts();
     }
     if (event.target.innerText === "New Post") {  
@@ -183,7 +184,7 @@ const showEditForm = () => {
     editFormField.description.value = isolatedFormField.children[2].children[0].innerText
     editFormField.tips.value = isolatedFormField.children[3].children[0].innerText
     editFormContainer.style.display = "block";
-    // editPost = false;
+    editPost = false;
   } else {
     editFormContainer.style.display = "none";
     loginDiv.style.display = "none";
@@ -217,6 +218,7 @@ const editExistingPost = () => {
         profPage.innerHTML = ""
         return fetchUserPosts()
     })
+  }
 
 
 const renderPostLike = (clicked, updatedPost) => {
@@ -258,7 +260,7 @@ const deletePost = (event) => {
     .then( resp => resp.json() )
     .then( post => {event.target.parentNode.remove() 
       postsDiv.innerHTML = ""
-      fetchPosts() 
+      return fetchPosts() 
   })
   alert("Your post is about to be deleted")
   }
@@ -288,30 +290,3 @@ profPage.addEventListener("click", (e) => {
 editFormSubmitButton.addEventListener("click", editExistingPost)
 profPage.addEventListener("click", deletePost)
 searchBar.addEventListener("input", handleSearch)
-
-
-// Extra
-
-// function fetchUsers() {
-//   fetch(USERS_URL)
-//   .then(resp => resp.json() )
-//   .then(userData => {
-//     user = userData
-//     postsDiv.innerHTML = ''
-//     fetchPosts()
-//   })
-// }
-
-// function renderNewPost(newPostData) {
-//   let postData = `<div id="card" class="col-md-8">
-//         <h4>📍 ${newPostData.location}</h4>
-//         <img src=${newPostData.image} class="img-fluid" id="post-avatar"/>
-//         <p>Description:${newPostData.description}</p>
-//         <p>Tips: ${newPostData.tips}</p>
-//         <p>Photo Date: ${newPostData.date}</p>
-//         <p>${newPostData.likes} Likes </p>
-//         <button data-id=${post.id} data-likes=${post.likes} type="button" class="btn btn-outline-danger btn-sm">Like</button>
-//         <button disabled style="display: none" type="button" class="btn btn-secondary btn-sm">Liked ❤️</button>
-//     </div>`
-//     postsDiv.innerHTML += postData 
-// }
