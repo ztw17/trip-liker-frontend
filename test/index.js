@@ -200,6 +200,9 @@ const editExistingPost = () => {
     fetch(`http://localhost:3000/posts/${editFormSubmitButton.children[0].dataset.id}`, editObj)
     .then(resp => resp.json())
     .then(updatedObj => console.log(updatedObj))
+    profPage.innerHTML = ""
+    fetchUserPosts()
+
     
 }
 
