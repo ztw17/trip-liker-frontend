@@ -215,6 +215,7 @@ const editExistingPost = () => {
         return fetchUserPosts()
     })
   }
+
 const renderPostLike = (clicked, updatedPost) => {
   const likesElement = clicked.previousElementSibling
   const likesPluralize = updatedPost.likes === 1 ? "Like" : "Likes"
@@ -253,7 +254,7 @@ const deletePost = (event) => {
     .then( resp => resp.json() )
     .then( post => {event.target.parentNode.remove() 
       postsDiv.innerHTML = ""
-      fetchPosts() 
+      return fetchPosts() 
   })
   alert("Your post is about to be deleted")
   }
@@ -281,29 +282,3 @@ editFormSubmitButton.addEventListener("click", editExistingPost)
 profPage.addEventListener("click", deletePost)
 searchBar.addEventListener("input", handleSearch)
 
-
-// Extra
-
-// function fetchUsers() {
-//   fetch(USERS_URL)
-//   .then(resp => resp.json() )
-//   .then(userData => {
-//     user = userData
-//     postsDiv.innerHTML = ''
-//     fetchPosts()
-//   })
-// }
-
-// function renderNewPost(newPostData) {
-//   let postData = `<div id="card" class="col-md-8">
-//         <h4>📍 ${newPostData.location}</h4>
-//         <img src=${newPostData.image} class="img-fluid" id="post-avatar"/>
-//         <p>Description:${newPostData.description}</p>
-//         <p>Tips: ${newPostData.tips}</p>
-//         <p>Photo Date: ${newPostData.date}</p>
-//         <p>${newPostData.likes} Likes </p>
-//         <button data-id=${post.id} data-likes=${post.likes} type="button" class="btn btn-outline-danger btn-sm">Like</button>
-//         <button disabled style="display: none" type="button" class="btn btn-secondary btn-sm">Liked ❤️</button>
-//     </div>`
-//     postsDiv.innerHTML += postData 
-// 
