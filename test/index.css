@@ -22,22 +22,21 @@
 }
 
 #card {
-    text-align: left;
-    background-color: white;
-    border: rgb(78, 78, 78) solid 2px;
-    padding: 1rem;
-    width: 40rem;
-    height: 52rem;
-    display: inline-grid;
-    margin: 1rem 2rem;
-    border-radius: 8px;
-    /* box-shadow: 3px 4px #4682B4 */
+  text-align: left;
+  background-color: white;
+  border: rgb(78, 78, 78) solid 2px;
+  padding: 1rem;
+  width: 40rem;
+  height: 52rem;
+  display: inline-grid;
+  margin: 1rem 2rem;
+  border-radius: 8px;
 }
 
 #post-avatar {
-    justify-self: center;
-    height: 30rem;
-    width: auto;
+  justify-self: center;
+  height: 30rem;
+  width: auto;
 }
 
 .modal-dialog {
@@ -58,3 +57,9 @@ img {
   padding-left: 1.5%;
   padding-right: 1.5%;
 }
+
+.custom {
+  width: 200px !important;
+  margin: 0 auto;
+}
+
