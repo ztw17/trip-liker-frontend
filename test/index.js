@@ -9,21 +9,23 @@ const postsDiv = document.getElementById("post-container");
 const formContainer = document.getElementById("new-post-form");
 const newPostForm = document.getElementsByClassName("add-post-form")[0];
 const formSubmitButton = document.getElementsByClassName("modal-footer")[0];
-const loginForm = document.getElementsByClassName("login-form")[0]
-const loginDiv = document.getElementsByClassName("login-div")[0]
-const modalDiv = document.getElementsByClassName("modal-content")[0]
-const editButton = document.getElementById("edit-button")
-const editFormContainer = document.getElementById("edit-post-form")
-const editFormSubmitButton = document.getElementsByClassName("modal-footer")[1]
-const editPostForm = document.getElementsByClassName("edit-post-form")[0]
+const loginForm = document.getElementsByClassName("login-form")[0];
+const loginDiv = document.getElementsByClassName("login-div")[0];
+const modalDiv = document.getElementsByClassName("modal-content")[0];
+const editButton = document.getElementById("edit-button");
+const editFormContainer = document.getElementById("edit-post-form");
+const editFormSubmitButton = document.getElementsByClassName("modal-footer")[1];
+const editPostForm = document.getElementsByClassName("edit-post-form")[0];
+const searchBar = document.getElementsByClassName("form-control")[0];
 // const editPostForm = document.getElemenyById(" ")
 let editPost = false;
 let user = null;
 let addPost = false;
+let allPosts = [];
 
-// FUNCTIONS 
-
+// functions
 const showCreatePostForm = () => {
+  console.log(addPost)
     addPost = !addPost;
     if (addPost) {
       formContainer.style.display = "block";
@@ -37,17 +39,23 @@ const showCreatePostForm = () => {
 function fetchPosts() {
     fetch(POSTS_URL)
       .then( resp => resp.json() )
-      .then( postsData => postsData.forEach(post => renderPostsData(post) )
+      .then( postsData => {
+        allPosts = postsData
+
+        postsData.forEach(post => renderPostsData(post))
+
+      }
 )}
 
 function renderPostsData(post) {
       let postData =  `<div id="card" class="col-md-8">
         <h4>📍 ${post.location}</h4>
         <img src=${post.image} class="img-fluid" id="post-avatar" /><br>
+        <p>Posted By: <b>${post.user.username}</b></p>
         <p>Description: <b>${post.description}</b></p>
-        <p>Tips: <b>${post.tips}</b></p>
+        <p>Tops Tips: <b>${post.tips}</b></p>
         <p>Photo Date: <b>${post.date}</b></p>
-        <p>${post.likes} ${post.likes === 1 ? "Like" : "Likes"}</p>
+        <p><b>${post.likes} ${post.likes === 1 ? "Like" : "Likes"}</b></p>
         <button data-id=${post.id} data-likes=${post.likes} data-user_id=${post.user.id} type="button" class="btn btn-outline-danger btn-sm">Like ❤️</button>
         <button disabled style="display: none" type="button" class="btn btn-secondary btn-sm">Liked ❤️</button>
       </div>`
@@ -115,10 +123,6 @@ const userLogin = (e) => {
     fetchPosts()
 }
 
-// const editPost = () => {
-//     e.preventDefault()
-// }
-
 const fetchUserPosts = () => {
     fetch(POSTS_URL)
     .then(resp => resp.json())
@@ -136,11 +140,12 @@ const navBarClickHandler = () => {
         postsDiv.parentElement.style.display = "none"
         loginDiv.style.display = "none"
         profPage.parentElement.style.display = "block"
-        fetchUserPosts()
+        fetchUserPosts();
     }
     if (event.target.innerText === "New Post") {  
-
-        showCreatePostForm()
+        showCreatePostForm();
+        newPostForm.reset();
+        addPost = false;
     }
 }
 
@@ -165,21 +170,22 @@ const updatedLikeObj = (likes) => {
     body: JSON.stringify({likes: likes + 1})
   }
 }
-const showEditForm = () => {
-    editPost = !editPost;
-    if (editPost) {
-      const editFormField = editFormContainer.firstElementChild;
-      const isolatedFormField = event.target.parentElement;
-      const locationString = isolatedFormField.children[0].children[0].innerText;
-      editFormField.location.value = locationString.substr(locationString.indexOf(" ") + 1)
-      editFormField.description.value = isolatedFormField.children[2].children[0].innerText
-      editFormField.tips.value = isolatedFormField.children[3].children[0].innerText
-      editFormContainer.style.display = "block";
 
-    } else {
-        editFormContainer.style.display = "none";
-        loginDiv.style.display = "none";
-    }
+const showEditForm = () => {
+  editPost = !editPost;
+  if (editPost) {
+    const editFormField = editFormContainer.firstElementChild;
+    const isolatedFormField = event.target.parentElement;
+    const locationString = isolatedFormField.children[0].children[0].innerText;
+    editFormField.location.value = locationString.substr(locationString.indexOf(" ") + 1)
+    editFormField.description.value = isolatedFormField.children[2].children[0].innerText
+    editFormField.tips.value = isolatedFormField.children[3].children[0].innerText
+    editFormContainer.style.display = "block";
+    // editPost = false;
+  } else {
+    editFormContainer.style.display = "none";
+    loginDiv.style.display = "none";
+  }
 }
 
 const createEditObj = (editDescription, editTips, editLocation) => {
@@ -204,12 +210,12 @@ const editExistingPost = () => {
     const editLocation = editPostForm.location.value
     const editObj = createEditObj(editDescription, editTips, editLocation)
     fetch(`http://localhost:3000/posts/${editFormSubmitButton.children[0].dataset.id}`, editObj)
-    .then(resp => resp.json())
-    .then(updatedObj => console.log(updatedObj))
+      .then(resp => resp.json())
+      .then(updatedObj => console.log(updatedObj))
     profPage.innerHTML = ""
-    fetchUserPosts()
-
-    
+    postsDiv.innerHTML = ""
+    fetchUserPosts()    
+    fetchPosts()
 }
 
 const renderPostLike = (clicked, updatedPost) => {
@@ -230,7 +236,7 @@ const renderUserPosts = (allPosts) => {
         </div>
         <img src=${post.image} class="img-fluid" id="post-avatar" />
         <p>Description: <b>${post.description}</b></p>
-        <p>Tips: <b>${post.tips}</b></p>
+        <p>Top Tips: <b>${post.tips}</b></p>
         <p>Photo Date: <b>${post.date}</b></p>
         <p>${post.likes} ${post.likes === 1 ? "Like" : "Likes"}</p>
         <button data-toggle="modal" data-target="#editModal" id="expand-edit-post-form" data-id=${post.id} type="button" class="btn btn-outline-success btn-sm">Edit Post</button>
@@ -257,19 +263,30 @@ const deletePost = (event) => {
   }
 }
 
+const handleSearch = () => {
+  const searchTerm = event.target.value.toLowerCase();
+  const filteredSearch = allPosts.filter(postObject => 
+    postObject.location.toLowerCase().includes(searchTerm)
+   || postObject.description.toLowerCase().includes(searchTerm)
+   || postObject.tips.toLowerCase().includes(searchTerm))
+  postsDiv.innerHTML = ""
+  filteredSearch.forEach(post => renderPostsData(post))
+}
+
 // Event Listeners
 formSubmitButton.addEventListener("click", createNewPost)
 loginForm.addEventListener("submit", userLogin)
 navBar.addEventListener("click", navBarClickHandler)
 postsDiv.addEventListener("click", likePost)
 profPage.addEventListener("click", (e) => {
-    if(e.target.innerText === "Edit Post") {
+    if (e.target.innerText === "Edit Post") {
     editFormSubmitButton.children[0].dataset.id = e.target.dataset.id
         showEditForm()
     }
 })
 editFormSubmitButton.addEventListener("click", editExistingPost)
 profPage.addEventListener("click", deletePost)
+searchBar.addEventListener("input", handleSearch)
 
 
 // Extra
