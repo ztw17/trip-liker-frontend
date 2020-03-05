@@ -168,7 +168,13 @@ const updatedLikeObj = (likes) => {
 const showEditForm = () => {
     editPost = !editPost;
     if (editPost) {
-        editFormContainer.style.display = "block";
+      const editFormField = editFormContainer.firstElementChild;
+      const isolatedFormField = event.target.parentElement;
+      const locationString = isolatedFormField.children[0].children[0].innerText;
+      editFormField.location.value = locationString.substr(locationString.indexOf(" ") + 1)
+      editFormField.description.value = isolatedFormField.children[2].children[0].innerText
+      editFormField.tips.value = isolatedFormField.children[3].children[0].innerText
+      editFormContainer.style.display = "block";
 
     } else {
         editFormContainer.style.display = "none";
