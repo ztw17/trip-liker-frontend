@@ -117,8 +117,9 @@ const userLogin = (e) => {
       .then(resp => resp.json())
       .then(userData => setUser(userData))
     loginDiv.style.display = "none"
-    postsDiv.style.display = "block"
+    postsDiv.parentElement.style.display = "block"
     navBar.style.display = "block"
+    postsDiv.innerHTML = ""
     fetchPosts()
 }
 
@@ -150,6 +151,14 @@ const navBarClickHandler = () => {
         newPostForm.reset();
         addPost = false;
     }
+    if (event.target.innerText === "Logout") {
+      loginDiv.style.display = "block"
+      postsDiv.parentElement.style.display = "none"
+      profPage.parentElement.style.display = "none"
+      navBar.style.display = "none"
+
+    }
+
 }
 
 const likePost = (event) => {
