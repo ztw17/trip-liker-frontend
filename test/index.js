@@ -54,7 +54,7 @@ function renderPostsData(post) {
         <p>Photo Date: <b>${post.date}</b></p>
         <p><b>${post.likes} ${post.likes === 1 ? "Like" : "Likes"}</b></p>
         <button data-id=${post.id} data-likes=${post.likes} data-user_id=${post.user.id} type="button" class="btn btn-outline-danger btn-md custom">Like ❤️</button>
-        <button disabled style="display: none" type="button" class="btn btn-secondary btn-sm custom">Liked ❤️</button>
+        <button disabled style="display: none" type="button" class="btn btn-secondary btn-md custom">Liked ❤️</button>
       </div>`
       postsDiv.innerHTML += postData 
 }
@@ -228,24 +228,24 @@ const renderUserPosts = (allPosts) => {
     allPosts.filter(post => { 
         if (user.id === post.user.id) {
         let userPostData =  `<div id="card" data-user=${post.user.id} class="col-md-8">
-        <div id="header">
-          <h4 class='header-title'>📍 ${post.location}</h4>
-        </div>
-        <img src=${post.image} class="img-fluid" id="post-avatar" />
-        <p>Description: <b>${post.description}</b></p>
-        <p>Top Tips: <b>${post.tips}</b></p>
-        <p>Photo Date: <b>${post.date}</b></p>
-        <p>${post.likes} ${post.likes === 1 ? "Like" : "Likes"}</p>
-        <button data-toggle="modal" data-target="#editModal" id="expand-edit-post-form" data-id=${post.id} type="button" class="btn btn-outline-success btn-sm">Edit Post</button>
-        <button id="delete-btn" data-id=${post.id} data-likes=${post.likes} type="button" class="btn btn-outline-danger btn-sm">Delete Post</button>
-      </div>`
+          <div id="header">
+            <h4 class='header-title'>📍 ${post.location}</h4>
+          </div>
+          <img src=${post.image} class="img-fluid" id="post-avatar" />
+          <p>Description: <b>${post.description}</b></p>
+          <p>Top Tips: <b>${post.tips}</b></p>
+          <p>Photo Date: <b>${post.date}</b></p>
+          <p>${post.likes} ${post.likes === 1 ? "Like" : "Likes"}</p>
+          <button data-toggle="modal" data-target="#editModal" id="expand-edit-post-form" data-id=${post.id} type="button" class="btn btn-outline-success btn-md">Edit</button>
+          <button id="delete-btn" data-id=${post.id} data-likes=${post.likes} type="button" class="btn btn-outline-danger btn-md">Delete</button>
+        </div>`
       profPage.innerHTML += userPostData 
     }
   })
 }
 
 const deletePost = (event) => {
-  if (event.target.innerText === "Delete Post"){
+  if (event.target.innerText === "Delete"){
   const postId = event.target.dataset.id
   const reqObj = {
     method: "DELETE"
@@ -273,7 +273,7 @@ loginForm.addEventListener("submit", userLogin)
 navBar.addEventListener("click", navBarClickHandler)
 postsDiv.addEventListener("click", likePost)
 profPage.addEventListener("click", (e) => {
-    if (e.target.innerText === "Edit Post") {
+    if (e.target.innerText === "Edit") {
     editFormSubmitButton.children[0].dataset.id = e.target.dataset.id
         showEditForm()
     }
@@ -281,4 +281,3 @@ profPage.addEventListener("click", (e) => {
 editFormSubmitButton.addEventListener("click", editExistingPost)
 profPage.addEventListener("click", deletePost)
 searchBar.addEventListener("input", handleSearch)
-
