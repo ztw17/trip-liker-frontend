@@ -126,7 +126,8 @@ const userLogin = (e) => {
 const fetchUserPosts = () => {
     fetch(POSTS_URL)
     .then(resp => resp.json())
-    .then(allPosts => renderUserPosts(allPosts))
+    .then(allPosts => {
+        return renderUserPosts(allPosts)})
 }
 
 const navBarClickHandler = () => {  
@@ -134,6 +135,7 @@ const navBarClickHandler = () => {
         homePage.style.display = "block"
         profPage.parentElement.style.display = "none"
         postsDiv.parentElement.style.display = "block"
+        fetchPosts()
     }
     if (event.target.innerText === "Profile"){
         homePage.style.display = "none"
@@ -198,7 +200,7 @@ const createEditObj = (editDescription, editTips, editLocation) => {
         body: JSON.stringify({
            description: editDescription,
            tips: editTips,
-           location: editLocation 
+           location: editLocation
         })
     }
 }
@@ -210,13 +212,12 @@ const editExistingPost = () => {
     const editLocation = editPostForm.location.value
     const editObj = createEditObj(editDescription, editTips, editLocation)
     fetch(`http://localhost:3000/posts/${editFormSubmitButton.children[0].dataset.id}`, editObj)
-      .then(resp => resp.json())
-      .then(updatedObj => console.log(updatedObj))
-    profPage.innerHTML = ""
-    postsDiv.innerHTML = ""
-    fetchUserPosts()    
-    fetchPosts()
-}
+    .then(resp => resp.json())
+    .then(() => {
+        profPage.innerHTML = ""
+        return fetchUserPosts()
+    })
+
 
 const renderPostLike = (clicked, updatedPost) => {
   const likesElement = clicked.previousElementSibling
@@ -228,7 +229,7 @@ const renderPostLike = (clicked, updatedPost) => {
 }
 
 const renderUserPosts = (allPosts) => {
-    allPosts.forEach(post => { 
+    allPosts.filter(post => { 
         if (user.id === post.user.id) {
         let userPostData =  `<div id="card" data-user=${post.user.id} class="col-md-8">
         <div id="header">
