@@ -1,4 +1,4 @@
-.h-100 {
+body {
     background: linear-gradient(200deg, rgb(153, 0, 255), #4e76ac, rgb(97, 201, 178));
     background-size: 600% 600%;
     background-attachment: fixed;
