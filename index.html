@@ -1,67 +1,188 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8" />
-    <title>Tripstagram</title>
-    <script defer type="text/javascript" src="index.js"></script>
+<html class="h-100" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tripstagram</title> 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="index.css" />
-  </head>
-  <body>
-    <div id="post-header">
-      <img
-        src=""
-        alt="post-header"
-      />
+    <script defer src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script defer src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script defer src="index.js"></script>
+</head>
+
+<body>
+    <div class="login-div container h-100" style="display: block">
+        <div class="row justify-content-center">
+          <img src="images/logo.png" alt="centered image" />
+        </div>
+        <form class="login-form row justify-content-center">
+          <input class="username-login" type="text" name="username" placeholder="Enter new or existing username" size="28">
+          <button class="login-btn" type="submit">Login</button>
+        </form>
     </div>
 
-    <div class="container">
-      <form class="add-post-form">
-        <h3>Create a Post!</h3>
+    <nav style="display: none" id="nav" class="navbar navbar-expand-lg navbar navbar-light bg-light">
+        <!-- <a class="navbar-brand" href="#">Navbar</a> -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <nav class="navbar navbar-light bg-light">
+            <a class="navbar-brand" href="#">
+              <img src="images/logo3.png" width="80" height="80" alt="">
+            </a>
+          </nav>
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Profile</a>
+            </li>
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          </ul>
+          <button data-toggle="modal" data-target="#exampleModal" id="expand-new-post-form" class="btn btn-outline-success my-2 my-sm-0">New Post</button>
+          <button id="logout" class="btn btn-outline-danger my-2 my-sm-0">Logout</button>
+        </div>
+      </nav>
 
-        <br />
-        <input
-          type="text"
-          name="image"
-          value=""
-          placeholder="Enter an image link..."
-          class="input-text"
-        />
-        <input
-          type="text"
-          name="name"
-          value=""
-          placeholder="Where was this photo taken?..."
-          class="input-text"
-        />
-        <br />
-        <input
-          type="text"
-          name="image"
-          value=""
-          placeholder="Give a description of the location of this image..."
-          class="input-text"
-        />
-        <br />
-        <input
-          type="text"
-          name="image"
-          value=""
-          placeholder="When was this image taken?..."
-          class="input-text"
-        />
-        <br />
-        <input
-          type="submit"
-          name="submit"
-          value="Create Post"
-          class="submit"
-        />
-      </form>
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div id="modal-form" class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Create A Post!</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="container" id="new-post-form" style="display: none" >
+                <form class="add-post-form">
+                  <b>Photo Link:</b>
+                  <input
+                    type="text"
+                    name="image"
+                    value=""
+                    placeholder="Enter an image link"
+                    class="input-text"
+                    size="50"
+                  />
+                  <br />
+                  <b>Location:</b><br />
+                  <input
+                    type="text"
+                    name="location"
+                    value=""
+                    placeholder="Where was this photo taken?"
+                    class="input-text"
+                    size="50"
+                  />
+                  <br />
+                  <b>Description:</b>
+                  <input
+                    type="text"
+                    name="description"
+                    value=""
+                    placeholder="Give a description about the location of this image"
+                    class="input-text"
+                    size="50"
+                  />
+                  <br />
+                  <b>Top Tips:</b><br />
+                  <input
+                  type="text"
+                  name="tips"
+                  value=""
+                  placeholder="Give your top tips from this trip"
+                  class="input-text"
+                  size="50"
+                  />
+                  <br />
+                  <b>Photo Date:</b>
+                  <input
+                    type="text"
+                    name="date"
+                    value=""
+                    placeholder="When was this photo taken?"
+                    class="input-text"
+                    size="50"
+                  />
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button data-dismiss="modal" id="form-submit" type="submit" class="btn btn-primary">Submit Post</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    <div class = "container">
+     <div  style="display: block">
+      <div id="post-container" class="row d-flex justify-content-center">
+      </div>
+      </div>
+
+      <div style="display: none" id="home"> </div>
+        <div style = "display: none">
+      <div id="profile" class="row d-flex justify-content-center">
+      </div>
+      </div>
     </div>
-    <p style="text-align:center">
-      Post a picture of your trip! <button id="new-post-btn">Create a new post!</button>
-    </p>
-
-    <div id="post-collection"></div>
-  </body>
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div id="modal-form" class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit Post</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="container" id="edit-post-form" style="display: none" >
+              <form class="edit-post-form">
+                <b>Location:</b>
+                <input
+                  type="text"
+                  name="location"
+                  value=""
+                  placeholder="Where was this photo taken?..."
+                  class="input-text"
+                  size="60"
+                />
+                <br />
+                <b>Description:</b>
+                <input
+                  type="text"
+                  name="description"
+                  value=""
+                  placeholder="Give a description of the location of this image..."
+                  class="input-text"
+                  size="60"
+                />
+                <br />
+                <b>Top Tips:</b>
+                <input
+                type="text"
+                name="tips"
+                value=""
+                placeholder="Give your top tips from this trip..."
+                class="input-text"
+                size="60"
+              />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button data-dismiss="modal" id="form-submit" name="sub" data-id="null" type="submit" class="btn btn-primary">Save Changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+</body>
 </html>
+
+
