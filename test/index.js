@@ -5,7 +5,6 @@ const homePage = document.getElementById("home");
 const profPage = document.getElementById("profile");
 const navBar = document.getElementById("nav");
 const postsDiv = document.getElementById("post-container");
-// const addBtn = document.querySelector("#new-post-btn");
 const formContainer = document.getElementById("new-post-form");
 const newPostForm = document.getElementsByClassName("add-post-form")[0];
 const formSubmitButton = document.getElementsByClassName("modal-footer")[0];
@@ -17,59 +16,89 @@ const editFormContainer = document.getElementById("edit-post-form");
 const editFormSubmitButton = document.getElementsByClassName("modal-footer")[1];
 const editPostForm = document.getElementsByClassName("edit-post-form")[0];
 const searchBar = document.getElementsByClassName("form-control")[0];
-// const editPostForm = document.getElemenyById(" ")
 let editPost = false;
 let user = null;
 let addPost = false;
 let allPosts = [];
 
 // functions
-const showCreatePostForm = () => {
-    addPost = !addPost;
-    if (addPost) {
-      formContainer.style.display = "block";
+const navBarClickHandler = () => {  
+  if (event.target.innerText === "Home"){
+      homePage.style.display = "block"
+      profPage.parentElement.style.display = "none"
+      postsDiv.parentElement.style.display = "block"
+      postsDiv.innerHTML = ""
+      fetchPosts()
+  }
+  if (event.target.innerText === "Profile"){
+      homePage.style.display = "none"
+      postsDiv.parentElement.style.display = "none"
+      loginDiv.style.display = "none"
+      profPage.parentElement.style.display = "block"
+      profPage.innerHTML = ""
+      fetchUserPosts();
+  }
+  if (event.target.innerText === "New Post") {  
+      showCreatePostForm();
+      newPostForm.reset();
+      addPost = false;
+  }
+  if (event.target.innerText === "Logout") {
+    loginDiv.style.display = "block"
+    postsDiv.parentElement.style.display = "none"
+    profPage.parentElement.style.display = "none"
+    navBar.style.display = "none"
+    postsDiv.innerHTML = ""
+    loginForm.reset();
+  }
+}
 
-    } else {
-      formContainer.style.display = "none";
-      loginDiv.style.display = "none";
-    }
+const showCreatePostForm = () => {
+  addPost = !addPost;
+  if (addPost) {
+    formContainer.style.display = "block";
+
+  } else {
+    formContainer.style.display = "none";
+    loginDiv.style.display = "none";
+  }
 }
   
 function fetchPosts() {
-    fetch(POSTS_URL)
-      .then( resp => resp.json() )
-      .then( postsData => {
-        allPosts = postsData
-        postsData.forEach(post => renderPostsData(post))
-      }
+  fetch(POSTS_URL)
+    .then( resp => resp.json() )
+    .then( postsData => {
+      allPosts = postsData
+      postsData.forEach(post => renderPostsData(post))
+    }
 )}
 
 function renderPostsData(post) {
-      let postData =  `<div id="card" class="col-md-8">
-        <h4>📍 ${post.location}</h4>
-        <img src=${post.image} class="img-fluid" id="post-avatar" /><br>
-        <p>Posted By: <b>${post.user.username}</b></p>
-        <p>Description: <b>${post.description}</b></p>
-        <p>Tops Tips: <b>${post.tips}</b></p>
-        <p>Photo Date: <b>${post.date}</b></p>
-        <p><b>${post.likes} ${post.likes === 1 ? "Like" : "Likes"}</b></p>
-        <button data-id=${post.id} data-likes=${post.likes} data-user_id=${post.user.id} type="button" class="btn btn-outline-danger btn-md custom">Like ❤️</button>
-        <button disabled style="display: none" type="button" class="btn btn-secondary btn-md custom">Liked ❤️</button>
-      </div>`
-      postsDiv.innerHTML += postData 
+  let postData =  `<div id="card" class="col-md-8">
+    <h4>📍${post.location}</h4>
+    <img src=${post.image} class="img-fluid" id="post-avatar" /><br>
+    <p>Posted By: <b>${post.user.username}</b></p>
+    <p>Description: <b>${post.description}</b></p>
+    <p>Top Tips: <b>${post.tips}</b></p>
+    <p>Photo Date: <b>${post.date}</b></p>
+    <p><b>${post.likes} ${post.likes === 1 ? "Like" : "Likes"}</b></p>
+    <button data-id=${post.id} data-likes=${post.likes} data-user_id=${post.user.id} type="button" class="btn btn-outline-danger btn-md custom">Like ❤️</button>
+    <button disabled style="display: none" type="button" class="btn btn-secondary btn-md custom">Liked ❤️</button>
+  </div>`
+  postsDiv.innerHTML += postData 
 }
 
 const createNewPost = () => {
-    event.preventDefault();
-    const image = newPostForm.image.value;
-    const location = newPostForm.location.value
-    const description = newPostForm.description.value
-    const tips = newPostForm.tips.value
-    const date = newPostForm.date.value
-    const reqObj = createPostObj(image, location, description, tips, date, user)
-    fetch(POSTS_URL, reqObj)
-      .then( resp => resp.json() )
-      .then( newPostData => renderPostsData(newPostData) )
+  event.preventDefault();
+  const image = newPostForm.image.value;
+  const location = newPostForm.location.value
+  const description = newPostForm.description.value
+  const tips = newPostForm.tips.value
+  const date = newPostForm.date.value
+  const reqObj = createPostObj(image, location, description, tips, date, user)
+  fetch(POSTS_URL, reqObj)
+    .then( resp => resp.json() )
+    .then( newPostData => renderPostsData(newPostData) )
 }
 
 const createPostObj = (image, location, description, tips, date, user) => {
@@ -93,39 +122,39 @@ const createPostObj = (image, location, description, tips, date, user) => {
 
 const createUserObj = (username) => {
   return {
-      method: "POST",
-      headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-      },
-      body: JSON.stringify({
-          username: username
-      })
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+    },
+    body: JSON.stringify({
+        username: username
+    })
   }
 }
 
 const setUser = (userData) => {
-    user = userData
+  user = userData
 }
 
 const userLogin = (e) => {
-    e.preventDefault()
-    username = loginForm.username.value
-    fetch(USERS_URL, createUserObj(username))
-      .then(resp => resp.json())
-      .then(userData => setUser(userData))
-    loginDiv.style.display = "none"
-    postsDiv.parentElement.style.display = "block"
-    navBar.style.display = "block"
-    postsDiv.innerHTML = ""
-    fetchPosts()
+  e.preventDefault()
+  username = loginForm.username.value
+  fetch(USERS_URL, createUserObj(username))
+    .then(resp => resp.json())
+    .then(userData => setUser(userData))
+  loginDiv.style.display = "none"
+  postsDiv.parentElement.style.display = "block"
+  navBar.style.display = "block"
+  postsDiv.innerHTML = ""
+  fetchPosts()
 }
 
 const fetchUserPosts = () => {
-    fetch(POSTS_URL)
-    .then(resp => resp.json())
-    .then(allPosts => {
-      return renderUserPosts(allPosts)})
+  fetch(POSTS_URL)
+  .then(resp => resp.json())
+  .then(allPosts => {
+    return renderUserPosts(allPosts)})
 }
 
 const navBarClickHandler = () => {  
@@ -154,9 +183,7 @@ const navBarClickHandler = () => {
       postsDiv.parentElement.style.display = "none"
       profPage.parentElement.style.display = "none"
       navBar.style.display = "none"
-
     }
-
 }
 
 const likePost = (event) => {
@@ -197,20 +224,22 @@ const showEditForm = () => {
     loginDiv.style.display = "none";
   }
 }
+
 const createEditObj = (editDescription, editTips, editLocation) => {
-    return {
-        method: "PATCH",
-        headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        },
-        body: JSON.stringify({
-           description: editDescription,
-           tips: editTips,
-           location: editLocation
-        })
-    }
+  return {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+      body: JSON.stringify({
+        description: editDescription,
+        tips: editTips,
+        location: editLocation
+    })
+  }
 }
+
 const editExistingPost = () => {
     event.preventDefault()
     const editDescription = editPostForm.description.value
@@ -233,22 +262,23 @@ const renderPostLike = (clicked, updatedPost) => {
   clicked.nextElementSibling.style.display ="block"
   likesElement.innerText = `${updatedPost.likes} ${likesPluralize}`
 }
+
 const renderUserPosts = (allPosts) => {
-    allPosts.filter(post => { 
-        if (user.id === post.user.id) {
-        let userPostData =  `<div id="card" data-user=${post.user.id} class="col-md-8">
-          <div id="header">
-            <h4 class='header-title'>📍 ${post.location}</h4>
-          </div>
-          <img src=${post.image} class="img-fluid" id="post-avatar" />
-          <p>Description: <b>${post.description}</b></p>
-          <p>Top Tips: <b>${post.tips}</b></p>
-          <p>Photo Date: <b>${post.date}</b></p>
-          <p>${post.likes} ${post.likes === 1 ? "Like" : "Likes"}</p>
-          <button data-toggle="modal" data-target="#editModal" id="expand-edit-post-form" data-id=${post.id} type="button" class="btn btn-outline-success btn-md">Edit</button>
-          <button id="delete-btn" data-id=${post.id} data-likes=${post.likes} type="button" class="btn btn-outline-danger btn-md">Delete</button>
-        </div>`
-      profPage.innerHTML += userPostData 
+  allPosts.filter(post => { 
+      if (user.id === post.user.id) {
+      let userPostData =  `<div id="card" data-user=${post.user.id} class="col-md-8">
+        <div id="header">
+          <h4 class='header-title'>📍 ${post.location}</h4>
+        </div>
+        <img src=${post.image} class="img-fluid" id="post-avatar" />
+        <p>Description: <b>${post.description}</b></p>
+        <p>Top Tips: <b>${post.tips}</b></p>
+        <p>Photo Date: <b>${post.date}</b></p>
+        <p><b>${post.likes} ${post.likes === 1 ? "Like" : "Likes"}</b></p>
+        <button data-toggle="modal" data-target="#editModal" id="expand-edit-post-form" data-id=${post.id} type="button" class="btn btn-outline-success btn-md">Edit</button>
+        <button id="delete-btn" data-id=${post.id} data-likes=${post.likes} type="button" class="btn btn-outline-danger btn-md">Delete</button>
+      </div>`
+    profPage.innerHTML += userPostData 
     }
   })
 }
