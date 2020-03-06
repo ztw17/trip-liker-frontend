@@ -157,7 +157,6 @@ const fetchUserPosts = () => {
     return renderUserPosts(allPosts)})
 }
 
-
 const likePost = (event) => {
   if (event.target.className === "btn btn-outline-danger btn-md custom") {
     const likes = parseInt(event.target.dataset.likes)
