@@ -157,6 +157,34 @@ const fetchUserPosts = () => {
     return renderUserPosts(allPosts)})
 }
 
+const navBarClickHandler = () => {  
+    if (event.target.innerText === "Home"){
+        homePage.style.display = "block"
+        profPage.parentElement.style.display = "none"
+        postsDiv.parentElement.style.display = "block"
+        postsDiv.innerHTML = ""
+        fetchPosts()
+    }
+    if (event.target.innerText === "Profile"){
+        homePage.style.display = "none"
+        postsDiv.parentElement.style.display = "none"
+        loginDiv.style.display = "none"
+        profPage.parentElement.style.display = "block"
+        profPage.innerHTML = ""
+        fetchUserPosts();
+    }
+    if (event.target.innerText === "New Post") {  
+        showCreatePostForm();
+        newPostForm.reset();
+        addPost = false;
+    }
+    if (event.target.innerText === "Logout") {
+      loginDiv.style.display = "block"
+      postsDiv.parentElement.style.display = "none"
+      profPage.parentElement.style.display = "none"
+      navBar.style.display = "none"
+    }
+}
 
 const likePost = (event) => {
   if (event.target.className === "btn btn-outline-danger btn-md custom") {
