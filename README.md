@@ -32,8 +32,7 @@ A number of Tripstagram posts and users are currently included in the seeds file
 5. Run `rails s`
 
 ### Client-Side Install Instructions
-1. Run `npm install`
-2. Run `npm start`
+1. Run `open index.html`
 
 ### Authors
 Zach Weber and Niko Dixon ([@NikoD-93](https://github.com/NikoD-93))
