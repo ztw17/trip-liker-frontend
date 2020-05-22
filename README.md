@@ -16,7 +16,7 @@ Before you continue, ensure you have met the following requirements:
 
 This app can be cloned as is (don't forget the backend repo, linked above).
 
-A number of Tripstagram posts and users are currently included in the seeds file. You may add additional seeds or create new posts and users yourself via the app.
+A number of Tripstagram posts and users are currently included in the seeds file. You may add additional seeds or create new posts and users yourself through the app.
 
 ### Built With
 - JavaScript
